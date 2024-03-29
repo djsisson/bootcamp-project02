@@ -1,7 +1,7 @@
 function calcdamage(obj) {
   let totaldamage = obj.baseValue;
   if (Math.random() < obj.critChance) {
-    totaldamage = totaldamage * (1 + obj.critChance) * obj.critDamage;
+    totaldamage = totaldamage * (obj.critDamage + 1);
   }
   return totaldamage;
 }
@@ -36,31 +36,35 @@ function setResearchActive() {
   });
 }
 
+function checkUpgradeExists(upgradetocheck) {
+  let found = false;
+  gamestate.upgrades.forEach((currentupgrades) => {
+    if (currentupgrades.id == upgradetocheck.id) {
+      found = true;
+    }
+  });
+  if (!found) {
+    let newupgrade = {
+      id: upgradetocheck.id,
+      level: 0,
+    };
+    gamestate.upgrades.push(newupgrade);
+  }
+}
+
 function setUpgradeActive() {
   gameobjects.upgrades.forEach((item) => {
     if (
       checkResearch(item.requiredresearch) ||
       item.requiredresearch.length == 0
     ) {
-      let found = false;
-      gamestate.upgrades.forEach((currentupgrades) => {
-        if (currentupgrades.id == item.id) {
-          found = true;
-        }
-      });
-      if (!found) {
-        let newupgrade = {
-          id: item.id,
-          level: 0,
-        };
-        gamestate.upgrades.push(newupgrade);
-      }
+      checkUpgradeExists(item);
+
       const element = document.querySelector(`[upgradeitem="${item.id}"`);
       if (element.getAttribute("state") == "hidden") {
         element.setAttribute("state", "active");
       }
       let currentlevel = gamestate.upgrades[item.id].level;
-      console.log(currentlevel);
       if (element.getAttribute("state") == "active") {
         element.toggleAttribute(
           "disabled",
@@ -68,7 +72,7 @@ function setUpgradeActive() {
         );
       }
       if (element.getAttribute("state") != "completed") {
-        element.textContent = `${item.name} ${currentlevel + 1} cost: ${
+        element.textContent = `${item.name} Level: ${currentlevel + 1} cost: ${
           item.levels[currentlevel].cost
         }`;
       }
@@ -120,11 +124,70 @@ function buyItem(cost) {
   gamestate.gamestats.totalspent += cost;
   refreshInventory();
 }
+function updateClick(){
+
+}
+
+function updateItem(){
+  
+}
 
 function refreshInventory() {
-  document.querySelector(".currentcounter").textContent =
-    gamestate.gamestats.currentscore;
-    saveGame();
+  const stats = gamestate.gamestats;
+  document.querySelector(
+    ".currentcounter"
+  ).textContent = `Current Total: ${stats.currentscore}`;
+  document.querySelector(
+    ".totalclicks"
+  ).textContent = `Total Clicks: ${stats.totalclicks}`;
+  document.querySelector(
+    ".totalspent"
+  ).textContent = `Total Spent: ${stats.totalspent}`;
+  const clickstats = gamestate.clickstats;
+  document.querySelector(
+    ".currentclickvalue"
+  ).textContent = `Average Click Value: ${
+    clickstats.baseValue * clickstats.critChance * clickstats.critDamage +
+    clickstats.baseValue
+  }`;
+}
+
+function checkShopItemExists(shopItemtoCheck) {
+  let found = false;
+  gamestate.inventory.forEach((currentShopItem) => {
+    if (currentShopItem.id == shopItemtoCheck.id) {
+      found = true;
+    }
+  });
+  if (!found) {
+    let shopItem = {
+      id: shopItemtoCheck.id,
+      quantity: 0,
+      cps: shopItemtoCheck.cps,
+    };
+    gamestate.inventory.push(shopItem);
+  }
+}
+
+function updateShop() {
+  gameobjects.shopitems.forEach((shopitem) => {
+    if (
+      checkResearch(shopitem.requiredresearch) ||
+      shopitem.requiredresearch.length == 0
+    ) {
+      checkShopItemExists(shopitem);
+      const element = document.querySelector(`[shopitem="${shopitem.id}"`);
+      if (element.getAttribute("state") == "hidden") {
+        element.setAttribute("state", "active");
+      }
+      if (element.getAttribute("state") == "active") {
+        element.toggleAttribute(
+          "disabled",
+          shopitem.cost > gamestate.gamestats.currentscore
+        );
+      }
+    }
+  });
 }
 
 function checkCost(obj) {}

@@ -16,32 +16,20 @@ function changetheme() {
   loadtheme();
 }
 
-function shakeasteroid() {
-  const image = document.querySelector(".asteroid img");
-  image.addEventListener("click", () => {
-    image.classList.toggle("shake");
-    gamestate.gamestats.totalclicks++;
-    gamestate.gamestats.currentscore += calcdamage(gamestate.clickstats);
-    refreshInventory();
-    updateResearch();
-    updateUpgrades();
-    saveGame();
-  });
-}
-
-function resetButton() {
-  document.querySelector(".reset button").addEventListener("click", () => {
-    localStorage.setItem("reset", "reset");
-    window.location.reload();
-  });
-}
-
 function resetGame() {
   if (localStorage.getItem("reset")) {
     localStorage.removeItem("gamestate");
     localStorage.removeItem("reset");
     saveGame();
   }
+}
+
+function refreshScreen() {
+  refreshInventory();
+  updateResearch();
+  updateUpgrades();
+  updateShop();
+  saveGame();
 }
 
 function saveGame() {
@@ -52,6 +40,7 @@ function loadgame() {
   gamestate = JSON.parse(localStorage.getItem("gamestate")) || gamestate;
   loadResearch();
   loadUpgrades();
+  loadshop();
 }
 
 function startgame() {

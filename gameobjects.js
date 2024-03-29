@@ -4,10 +4,33 @@ const gameobjects = {
       id: 0,
       name: "Weapon",
       requiredresearch: [],
+      type: 0,
+      effectitemid: 0,
       levels: [
-        { cost: 1, upgrade: { type: "click", value: 1 } },
-        { cost: 5, upgrade: { type: "click", value: 5 } },
-        { cost: 10, upgrade: { type: "click", value: 10 } },
+        {
+          cost: 1,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 5,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 10,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
       ],
     },
     {
@@ -15,19 +38,42 @@ const gameobjects = {
       name: "Clones",
       requiredresearch: [0],
       levels: [
-        { cost: 10, upgrade: { item: "clickpersecond", value: 1 } },
-        { cost: 50, upgrade: { item: "clickpersecond", value: 5 } },
-        { cost: 100, upgrade: { item: "clickpersecond", value: 10 } },
+        { cost: 10, upgrade: { type: 1, value: 1 } },
+        { cost: 50, upgrade: { type: 1, value: 5 } },
+        { cost: 100, upgrade: { type: 1, value: 10 } },
       ],
     },
     {
       id: 2,
       name: "Crit Chance",
       requiredresearch: [1],
+      type: 0,
+      effectitemid: 0,
       levels: [
-        { cost: 100, upgrade: { item: "click", value: 10 } },
-        { cost: 500, upgrade: { item: "click", value: 50 } },
-        { cost: 1000, upgrade: { item: "click", value: 100 } },
+        {
+          cost: 10,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0.1,
+            critDamage: 0.2,
+          },
+        },
+        {
+          cost: 50,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0.1,
+            critDamage: 0.2,
+          },
+        },
+        {
+          cost: 100,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0.1,
+            critDamage: 0.2,
+          },
+        },
       ],
     },
     {
@@ -35,14 +81,20 @@ const gameobjects = {
       name: "Refining",
       requiredresearch: [2],
       levels: [
-        { cost: 100, upgrade: { item: "click", value: 10 } },
-        { cost: 500, upgrade: { item: "click", value: 50 } },
-        { cost: 1000, upgrade: { item: "click", value: 100 } },
+        { cost: 100, upgrade: { type: 1, value: 10 } },
+        { cost: 500, upgrade: { type: 1, value: 50 } },
+        { cost: 1000, upgrade: { type: 1, value: 100 } },
       ],
     },
   ],
   research: [
-    { id: 0, name: "Cloning", cost: 1, requireditems: [], requiredresearch: [] },
+    {
+      id: 0,
+      name: "Cloning",
+      cost: 1,
+      requireditems: [],
+      requiredresearch: [],
+    },
     {
       id: 1,
       name: "Critcal Strike",
@@ -57,30 +109,38 @@ const gameobjects = {
       requireditems: [],
       requiredresearch: [1],
     },
+    {
+      id: 3,
+      name: "Super Clones",
+      cost: 1000,
+      requireditems: [],
+      requiredresearch: [2],
+    },
   ],
   shopitems: [
     {
-      name: "shopitem1",
-      cost: 10,
+      id: 0,
+      name: "Clone",
+      cost: 1,
       requireditems: [""],
-      requiredresearch: ["research1"],
+      requiredresearch: [0],
       cps: {
-        baseValue: 1,
+        baseValue: 0.5,
         critChance: 0,
         critDamage: 0,
       },
     },
     {
-      name: "shopitem2",
-      cost: 100,
+      id: 1,
+      name: "Super Clone",
+      cost: 10,
       requireditems: [""],
-      requiredresearch: ["research2"],
-    },
-    {
-      name: "shopitem3",
-      cost: 10000,
-      requireditems: [""],
-      requiredresearch: ["research3"],
+      requiredresearch: [3],
+      cps: {
+        baseValue: 1,
+        critChance: 0.1,
+        critDamage: 1,
+      },
     },
   ],
 };
@@ -95,9 +155,9 @@ let gamestate = {
   clickstats: {
     baseValue: 1,
     critChance: 0,
-    critDamage: 0,
+    critDamage: 0.5,
   },
   researched: [],
-  upgrades: [{id: 0, level: 0}],
+  upgrades: [{ id: 0, level: 0 }],
   inventory: [],
 };

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
     <script src="./gameobjects.js" defer></script>
-    <script src="./gamestate.js" defer></script>
-    <script src="./eventhandlers.js" defer></script>
+    <script src="./buttonhandlers.js" defer></script>
+    <script src="./gamelogic.js" defer></script>
     <script src="./script.js" defer></script>
     <title>Asteroid Miner</title>
   </head>
@@ -27,8 +27,8 @@
               <img src="./assets/asteroid.png" alt="" />
             </div>
           </div>
-          <div class="counter theme"><div class="currentcounter"></div></div>
-          <div class="shop theme">shop</div>
+          <div class="counter theme"><div class="currentcounter"></div><div class="totalclicks"></div><div class="totalspent"></div><div class="currentclickvalue"></div><div class="currentclickpersecond"></div></div>
+          <div class="shop theme"><div class="shop-title">Shop</div><div class="shop-items"></div></div>
           <div class="inventory theme">inventory</div>
         </div>
       </main>
