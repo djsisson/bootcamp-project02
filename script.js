@@ -17,11 +17,41 @@ function changetheme() {
 }
 
 function shakeasteroid() {
-const image = document.querySelector(".asteroid img");
-image.addEventListener("click", () => {
+  const image = document.querySelector(".asteroid img");
+  image.addEventListener("click", () => {
     image.classList.toggle("shake");
-});
+    gamestate.gamestats.totalclicks++;
+    gamestate.gamestats.currentscore += calcdamage(gamestate.clickstats);
+    document.querySelector(".currentcounter").textContent =
+      gamestate.gamestats.currentscore;
+    saveGame();
+  });
 }
 
-changetheme();
-shakeasteroid();
+function resetGame() {
+  if (localStorage.getItem("reset")) {
+    localStorage.removeItem("gamestate");
+    localStorage.removeItem("reset");
+    saveGame();
+  }
+}
+
+function saveGame() {
+  localStorage.setItem("gamestate", JSON.stringify(gamestate));
+}
+
+function loadgame() {
+  gamestate = JSON.parse(localStorage.getItem("gamestate")) || gamestate;
+  loadResearch();
+  document.querySelector(".currentcounter").textContent =
+    gamestate.gamestats.currentscore;
+}
+
+function startgame() {
+  changetheme();
+  resetGame();
+  loadgame();
+  shakeasteroid();
+}
+
+startgame();

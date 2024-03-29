@@ -127,3 +127,35 @@ button {
     animation-iteration-count: 1;
   }
   
+  .currentcounter{
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .research-title{
+    font-size: 5vw;
+    text-align: center;
+  }
+
+  .research-items{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    height: 100%;
+  }
+
+  [researchitem]{
+    font-size: 3vw;
+  }
+  [researchitem][state="hidden"]{
+    visibility: hidden;
+  }
+  [researchitem][state="active"]{
+    visibility:visible;
+    background-color: green;
+  }
+  [researchitem][state="completed"]{
+    visibility:visible;
+    background-color: red;
+  }

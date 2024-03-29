@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
+    <script src="./gameobjects.js" defer></script>
+    <script src="./gamestate.js" defer></script>
+    <script src="./eventhandlers.js" defer></script>
     <script src="./script.js" defer></script>
     <title>Asteroid Miner</title>
   </head>
@@ -11,13 +14,7 @@
     <div class="page-container">
       <header class="theme">
         <div class="title">Asteroid Miner</div>
-        <div class="nav">
-          <ul>
-            <li>new game</li>
-            <li>load game</li>
-            <li>reset game</li>
-          </ul>
-        </div>
+        <div class="reset"><button>Reset</button></div>
         <div class="theme-menu"><button class="themebutton">aqua</button><button class="themebutton">red</button>
       </header>
       <main>
@@ -42,13 +39,13 @@
               <div class="total"></div>
             </div>
           </div>
-          <div class="research theme">research</div>
+          <div class="research theme"><div class="research-title">Research</div><div class="research-items"></div></div>
           <div class="viewport theme">
             <div class="asteroid">
               <img src="./assets/asteroid.png" alt="" />
             </div>
           </div>
-          <div class="counter theme"></div>
+          <div class="counter theme"><div class="currentcounter"></div></div>
           <div class="shop theme">shop</div>
           <div class="inventory theme">inventory</div>
         </div>
