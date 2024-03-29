@@ -6,8 +6,8 @@
   color: white;
 }
 
-:root{
-    --customtheme: aqua;
+:root {
+  --customtheme: aqua;
 }
 
 .page-container {
@@ -22,10 +22,9 @@
   grid-template-columns: 1fr;
 }
 
-.theme{
-    /*border-color: rgb(238, 238, 238);*/
-    border-color: var(--customtheme);
-    
+.theme {
+  /*border-color: rgb(238, 238, 238);*/
+  border-color: var(--customtheme);
 }
 
 .layout-container {
@@ -68,8 +67,8 @@ header {
   border-right: none;
 }
 
-.counter{
-    grid-area: -2 / 2 / -1 / -2;
+.counter {
+  grid-area: -2 / 2 / -1 / -2;
   border-width: 5px;
   border-style: outset;
 }
@@ -79,25 +78,25 @@ header {
   border-width: 5px;
   border-style: outset;
 }
-.asteroid{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+.asteroid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
-.asteroid > img{
-    width: 50%;
+.asteroid > img {
+  width: 50%;
 }
 
-.asteroid img:hover{
-    cursor:pointer;
+.asteroid img:hover {
+  cursor: pointer;
 }
 
 footer {
   grid-area: -2 / 1 / -1 / -1;
-  border-top: 5px  outset;
+  border-top: 5px outset;
 }
 
 .totals {
@@ -109,53 +108,109 @@ button {
 }
 
 @keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
   }
-  
-  .shake {
-    animation: shake 0.25s;
-    animation-iteration-count: 1;
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
   }
-  
-  .currentcounter{
-    width: 100%;
-    text-align: center;
-    justify-content: center;
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
   }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
 
-  .research-title{
-    font-size: 5vw;
-    text-align: center;
-  }
+.shake {
+  animation: shake 0.25s;
+  animation-iteration-count: 1;
+}
 
-  .research-items{
-    display: flex;
-    flex-direction: column;
-    width:100%;
-    height: 100%;
-  }
+.currentcounter {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
 
-  [researchitem]{
-    font-size: 3vw;
-  }
-  [researchitem][state="hidden"]{
-    visibility: hidden;
-  }
-  [researchitem][state="active"]{
-    visibility:visible;
-    background-color: green;
-  }
-  [researchitem][state="completed"]{
-    visibility:visible;
-    background-color: red;
-  }
+.research-title,
+.upgrades-title {
+  font-size: 5vw;
+  text-align: center;
+}
+
+.research-items,
+.upgrade-items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+[researchitem] {
+  font-size: 2vw;
+  margin: 1vw;
+}
+[researchitem][state="hidden"] {
+  visibility: hidden;
+}
+[researchitem][state="active"][disabled] {
+  visibility: visible;
+  background-color: blue;
+}
+[researchitem][state="active"]:not([disabled]) {
+  visibility: visible;
+  background-color: yellow;
+  cursor: pointer;
+}
+[upgradeitem] {
+  font-size: 2vw;
+  margin: 1vw;
+}
+[upgradeitem][state="hidden"] {
+  visibility: hidden;
+}
+[upgradeitem][state="active"][disabled] {
+  visibility: visible;
+  background-color: blue;
+}
+[upgradeitem][state="active"]:not([disabled]) {
+  visibility: visible;
+  background-color: yellow;
+  cursor: pointer;
+}
+[upgradeitem][state="completed"] {
+  cursor: not-allowed;
+  visibility: visible;
+  background-color: green;
+}
+
+[disabled] {
+  cursor: not-allowed;
+}
+[researchitem][state="completed"] {
+  cursor: not-allowed;
+  visibility: visible;
+  background-color: green;
+}

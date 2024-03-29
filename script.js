@@ -22,9 +22,17 @@ function shakeasteroid() {
     image.classList.toggle("shake");
     gamestate.gamestats.totalclicks++;
     gamestate.gamestats.currentscore += calcdamage(gamestate.clickstats);
-    document.querySelector(".currentcounter").textContent =
-      gamestate.gamestats.currentscore;
+    refreshInventory();
+    updateResearch();
+    updateUpgrades();
     saveGame();
+  });
+}
+
+function resetButton() {
+  document.querySelector(".reset button").addEventListener("click", () => {
+    localStorage.setItem("reset", "reset");
+    window.location.reload();
   });
 }
 
@@ -43,14 +51,17 @@ function saveGame() {
 function loadgame() {
   gamestate = JSON.parse(localStorage.getItem("gamestate")) || gamestate;
   loadResearch();
-  document.querySelector(".currentcounter").textContent =
-    gamestate.gamestats.currentscore;
+  loadUpgrades();
 }
 
 function startgame() {
   changetheme();
+  resetButton();
   resetGame();
   loadgame();
+  updateResearch();
+  updateUpgrades();
+  refreshInventory();
   shakeasteroid();
 }
 
