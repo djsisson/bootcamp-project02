@@ -22,20 +22,31 @@ function increaseUpgrade(upgradeObj, upgradeElement) {
       currentUpgrade.level + 1
     } cost: ${upgradeObj.levels[currentUpgrade.level].cost}`;
   }
+  const currentitem = upgradeObj.levels[currentUpgrade.level - 1];
   if (upgradeObj.type == 0) {
-    const currentitem = upgradeObj.levels[currentUpgrade.level - 1];
     gamestate.clickstats.baseValue += currentitem.upgrade.baseValue;
     gamestate.clickstats.critChance += currentitem.upgrade.critChance;
     gamestate.clickstats.critDamage += currentitem.upgrade.critDamage;
+  } else if (upgradeObj.type == 1) {
+    const invenItem = gamestate.inventory.find(
+      (x) => x.id == upgradeObj.effectitemid
+    );
+    invenItem.cps.baseValue += currentitem.upgrade.baseValue;
+    invenItem.cps.critChance += currentitem.upgrade.critChance;
+    invenItem.cps.critDamage += currentitem.upgrade.critDamage;
   }
 
   buyItem(upgradeObj.levels[currentUpgrade.level - 1].cost);
 }
 
 function buyShopItem(shopObj) {
-  let shopItem = gamestate.inventory.find((x) => x.id == shopObj.id);
-  shopItem.Quantity++;
-  buyItem(shopObj.cost);
+  let InvenItem = gamestate.inventory.find((x) => x.id == shopObj.id);
+  InvenItem.quantity++;
+  shopObj.requireditems.forEach((item) => {
+    let itemtoremove = gamestate.inventory.find((x) => x.id == item.id);
+    itemtoremove.quantity -= item.quantity;
+  });
+  buyItem(shopObj.cost * Math.pow(shopObj.multiplier, InvenItem.quantity - 1));
 }
 
 function shakeasteroid() {
@@ -55,11 +66,11 @@ function resetButton() {
   });
 }
 
-function mainTimer(){
+function mainTimer() {
   gamestate.inventory.forEach((x) => {
-    for(i=0; i < x.Quantity; i++ ){
+    for (i = 0; i < x.quantity; i++) {
       gamestate.gamestats.currentscore += calcdamage(x.cps);
     }
-  })
+  });
   refreshScreen();
 }
