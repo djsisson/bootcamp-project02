@@ -55,15 +55,15 @@ const gameobjects = {
           upgrade: {
             baseValue: 1,
             critChance: 0.1,
-            critDamage: 0.2,
+            critDamage: 0,
           },
         },
         {
           cost: 50,
           upgrade: {
             baseValue: 1,
-            critChance: 0.1,
-            critDamage: 0.2,
+            critChance: 0,
+            critDamage: 0.5,
           },
         },
         {
@@ -71,7 +71,7 @@ const gameobjects = {
           upgrade: {
             baseValue: 1,
             critChance: 0.1,
-            critDamage: 0.2,
+            critDamage: 0.5,
           },
         },
       ],
@@ -151,6 +151,7 @@ let gamestate = {
     currentscore: 0,
     totalclicks: 0,
     totalspent: 0,
+    currentAveragecps: 0
   },
   clickstats: {
     baseValue: 1,

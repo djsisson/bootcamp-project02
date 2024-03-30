@@ -25,11 +25,16 @@ function resetGame() {
 }
 
 function refreshScreen() {
+  refreshStats();
+  enableOrDisable();
   refreshInventory();
-  updateResearch();
-  updateUpgrades();
-  updateShop();
   saveGame();
+}
+
+function enableOrDisable() {
+  enableOrDisableResearch();
+  enableOrDisableUpgrade();
+  enableOrDisableShopItem();
 }
 
 function saveGame() {
@@ -40,7 +45,8 @@ function loadgame() {
   gamestate = JSON.parse(localStorage.getItem("gamestate")) || gamestate;
   loadResearch();
   loadUpgrades();
-  loadshop();
+  loadShop();
+  
 }
 
 function startgame() {
@@ -48,10 +54,9 @@ function startgame() {
   resetButton();
   resetGame();
   loadgame();
-  updateResearch();
-  updateUpgrades();
-  refreshInventory();
   shakeasteroid();
+  refreshScreen();
+  setInterval(mainTimer,1000);
 }
 
 startgame();

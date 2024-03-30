@@ -1,60 +1,41 @@
-function loadResearch() {
-  const researchElement = document.querySelector(".research-items");
-  gameobjects.research.forEach((item) => {
-    const newResearch = document.createElement("button");
-    newResearch.setAttribute("researchitem", item.id);
-    newResearch.setAttribute("state", "hidden");
-    newResearch.textContent = `${item.name} cost: ${item.cost}`;
-    newResearch.type = "button";
-    newResearch.addEventListener("click", () => {
-      gamestate.researched.push(item.id);
-      buyItem(item.cost);
-      refreshScreen();
-    });
-    researchElement.appendChild(newResearch);
-  });
+function addResearchToGame(researchObj, researchElement) {
+  gamestate.researched.push(researchObj.id);
+  researchElement.toggleAttribute("complete");
+  researchElement.toggleAttribute("disabled");
+  checkForUnlockedResearch();
+  checkForUnlockedUpgrades();
+  checkForUnlockedShopItem();
+  buyItem(researchObj.cost);
 }
 
-function loadUpgrades() {
-  const upgradeElement = document.querySelector(".upgrade-items");
-  gameobjects.upgrades.forEach((item) => {
-    const newUpgrade = document.createElement("button");
-    newUpgrade.setAttribute("upgradeitem", item.id);
-    newUpgrade.setAttribute("state", "hidden");
-    newUpgrade.textContent = `${item.name} level: 1 cost: ${item.levels[0].cost}`;
-    newUpgrade.type = "button";
-    newUpgrade.addEventListener("click", () => {
-      let currentupgrade = gamestate.upgrades[item.id];
-      const currentitem = item.levels[currentupgrade.level];
-      buyItem(currentitem.cost);
-      if (item.type == 0) {
-        gamestate.clickstats.baseValue += currentitem.upgrade.baseValue;
-        gamestate.clickstats.critChance += currentitem.upgrade.critChance;
-        gamestate.clickstats.critDamage += currentitem.upgrade.critDamage;
-      } else {
-      }
-      currentupgrade.level++;
-      refreshScreen();
-    });
-    upgradeElement.appendChild(newUpgrade);
-  });
+function increaseUpgrade(upgradeObj, upgradeElement) {
+  let currentUpgrade = gamestate.upgrades.find((x) => x.id == upgradeObj.id);
+
+  currentUpgrade.level++;
+
+  if (currentUpgrade.level == upgradeObj.levels.length) {
+    upgradeElement.toggleAttribute("complete");
+    upgradeElement.toggleAttribute("disabled");
+    upgradeElement.textContent = `${upgradeObj.name} Completed!`;
+  } else {
+    upgradeElement.textContent = `${upgradeObj.name} level: ${
+      currentUpgrade.level + 1
+    } cost: ${upgradeObj.levels[currentUpgrade.level].cost}`;
+  }
+  if (upgradeObj.type == 0) {
+    const currentitem = upgradeObj.levels[currentUpgrade.level - 1];
+    gamestate.clickstats.baseValue += currentitem.upgrade.baseValue;
+    gamestate.clickstats.critChance += currentitem.upgrade.critChance;
+    gamestate.clickstats.critDamage += currentitem.upgrade.critDamage;
+  }
+
+  buyItem(upgradeObj.levels[currentUpgrade.level - 1].cost);
 }
 
-function loadshop() {
-  const shopElement = document.querySelector(".shop-items");
-  gameobjects.shopitems.forEach((item) => {
-    const newShopItem = document.createElement("button");
-    newShopItem.setAttribute("shopitem", item.id);
-    newShopItem.setAttribute("state", "hidden");
-    newShopItem.textContent = `${item.name} cost: ${item.cost}`;
-    newShopItem.type = "button";
-    newShopItem.addEventListener("click", () => {
-      // gamestate.researched.push(item.id);
-      // buyItem(item.cost);
-      refreshScreen();
-    });
-    shopElement.appendChild(newShopItem);
-  });
+function buyShopItem(shopObj) {
+  let shopItem = gamestate.inventory.find((x) => x.id == shopObj.id);
+  shopItem.Quantity++;
+  buyItem(shopObj.cost);
 }
 
 function shakeasteroid() {
@@ -72,4 +53,13 @@ function resetButton() {
     localStorage.setItem("reset", "reset");
     window.location.reload();
   });
+}
+
+function mainTimer(){
+  gamestate.inventory.forEach((x) => {
+    for(i=0; i < x.Quantity; i++ ){
+      gamestate.gamestats.currentscore += calcdamage(x.cps);
+    }
+  })
+  refreshScreen();
 }
