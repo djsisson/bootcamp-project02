@@ -50,11 +50,35 @@ function enableOrDisableShopItem() {
   researchElements.forEach((element) => {
     let elementid = element.getAttribute("shopitem");
     let elementObj = gameobjects.shopitems.find((x) => x.id == elementid);
-    element.toggleAttribute(
-      "disabled",
-      elementObj.cost > gamestate.gamestats.currentscore
-    );
+    let invenquantity = gamestate.inventory.find((x) => x.id == elementid);
+    if (invenquantity.quantity == elementObj.max) {
+      element.textContent = `${elementObj.name} MAX`;
+      element.toggleAttribute("disabled", true);
+    } else {
+      let adjustedcost =
+        elementObj.cost *
+        Math.pow(elementObj.multiplier, invenquantity.quantity);
+      element.textContent = `${elementObj.name}  cost: ${adjustedcost}`;
+      element.toggleAttribute(
+        "disabled",
+        !canBuy(adjustedcost, elementObj.requireditems)
+      );
+    }
   });
+}
+
+function canBuy(cost, items) {
+  let buyItems = true;
+  items.forEach((item) => {
+    let invenItem = gamestate.inventory.find((x) => x.id == item.id);
+    if (invenItem.quantity < item.quantity) {
+      buyItems = false;
+    }
+  });
+  if (cost > gamestate.gamestats.currentscore) {
+    buyItems = false;
+  }
+  return buyItems;
 }
 
 function loadUpgrades() {
@@ -131,7 +155,7 @@ function checkForUnlockedShopItem() {
   //add each item that is left
   unresearchedItems.forEach((x) => {
     addShopElement(x);
-    gamestate.inventory.push({ id: x.id, Quantity: 0, cps: x.cps });
+    gamestate.inventory.push({ id: x.id, quantity: 0, cps: x.cps });
   });
 }
 
@@ -187,11 +211,10 @@ function addShopElement(shopObj) {
 
 function addInventoryElement(invenObj) {
   const invenItemsElement = document.querySelector(".inventory-items");
-  invenItemsElement.replaceChildren();
   const newinventoryElement = document.createElement("button");
   newinventoryElement.setAttribute("inventoryitem", invenObj.id);
   let shopitem = gameobjects.shopitems.find((x) => x.id == invenObj.id);
-  newinventoryElement.textContent = `${shopitem.name}  Qty: ${invenObj.Quantity}`;
+  newinventoryElement.textContent = `${shopitem.name}  Qty: ${invenObj.quantity}`;
   newinventoryElement.type = "button";
   newinventoryElement.addEventListener("click", () => {
     //   buyShopItem(shopObj);
@@ -217,7 +240,7 @@ function refreshStats() {
   const stats = gamestate.gamestats;
   document.querySelector(
     ".currentcounter"
-  ).textContent = `Current Total: ${stats.currentscore}`;
+  ).textContent = `Current Total: ${Math.round(stats.currentscore)}`;
   document.querySelector(
     ".totalclicks"
   ).textContent = `Total Clicks: ${stats.totalclicks}`;
@@ -227,22 +250,25 @@ function refreshStats() {
   const clickstats = gamestate.clickstats;
   document.querySelector(
     ".currentclickvalue"
-  ).textContent = `Average Click Value: ${
+  ).textContent = `Average Click Value: ${Math.round(
     averageDamage(clickstats)
-  }`;
+  )}`;
   document.querySelector(
     ".currentclickpersecond"
-  ).textContent = `Average CPS: ${stats.currentAveragecps}`;
+  ).textContent = `Average CPS: ${Math.round(stats.currentAveragecps)}`;
 }
+
 function averageDamage(obj) {
   return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
 }
 
 function refreshInventory() {
   gamestate.gamestats.currentAveragecps = 0;
+  const invenItemsElement = document.querySelector(".inventory-items");
+  invenItemsElement.replaceChildren();
   gamestate.inventory.forEach((x) => {
-    gamestate.gamestats.currentAveragecps += averageDamage(x.cps)*x.Quantity;
-    if (x.Quantity != 0) addInventoryElement(x);
+    gamestate.gamestats.currentAveragecps += averageDamage(x.cps) * x.quantity;
+    if (x.quantity != 0) addInventoryElement(x);
   });
   refreshStats();
 }

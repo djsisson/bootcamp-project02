@@ -8,14 +8,6 @@ const gameobjects = {
       effectitemid: 0,
       levels: [
         {
-          cost: 1,
-          upgrade: {
-            baseValue: 1,
-            critChance: 0,
-            critDamage: 0,
-          },
-        },
-        {
           cost: 5,
           upgrade: {
             baseValue: 1,
@@ -24,7 +16,15 @@ const gameobjects = {
           },
         },
         {
-          cost: 10,
+          cost: 20,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 50,
           upgrade: {
             baseValue: 1,
             critChance: 0,
@@ -37,10 +37,33 @@ const gameobjects = {
       id: 1,
       name: "Clones",
       requiredresearch: [0],
+      type: 1,
+      effectitemid: 0,
       levels: [
-        { cost: 10, upgrade: { type: 1, value: 1 } },
-        { cost: 50, upgrade: { type: 1, value: 5 } },
-        { cost: 100, upgrade: { type: 1, value: 10 } },
+        {
+          cost: 10,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 50,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 100,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
       ],
     },
     {
@@ -51,7 +74,7 @@ const gameobjects = {
       effectitemid: 0,
       levels: [
         {
-          cost: 10,
+          cost: 100,
           upgrade: {
             baseValue: 1,
             critChance: 0.1,
@@ -59,7 +82,7 @@ const gameobjects = {
           },
         },
         {
-          cost: 50,
+          cost: 250,
           upgrade: {
             baseValue: 1,
             critChance: 0,
@@ -67,7 +90,7 @@ const gameobjects = {
           },
         },
         {
-          cost: 100,
+          cost: 500,
           upgrade: {
             baseValue: 1,
             critChance: 0.1,
@@ -80,10 +103,66 @@ const gameobjects = {
       id: 3,
       name: "Refining",
       requiredresearch: [2],
+      type: 0,
+      effectitemid: 0,
       levels: [
-        { cost: 100, upgrade: { type: 1, value: 10 } },
-        { cost: 500, upgrade: { type: 1, value: 50 } },
-        { cost: 1000, upgrade: { type: 1, value: 100 } },
+        {
+          cost: 100,
+          upgrade: {
+            baseValue: 2,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 500,
+          upgrade: {
+            baseValue: 2,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 1000,
+          upgrade: {
+            baseValue: 2,
+            critChance: 0,
+            critDamage: 1,
+          },
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Super Clones",
+      requiredresearch: [3],
+      type: 1,
+      effectitemid: 1,
+      levels: [
+        {
+          cost: 10,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 50,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 100,
+          upgrade: {
+            baseValue: 1,
+            critChance: 0.1,
+            critDamage: 1,
+          },
+        },
       ],
     },
   ],
@@ -121,8 +200,10 @@ const gameobjects = {
     {
       id: 0,
       name: "Clone",
-      cost: 1,
-      requireditems: [""],
+      cost: 5,
+      requireditems: [],
+      max: 10,
+      multiplier: 2,
       requiredresearch: [0],
       cps: {
         baseValue: 0.5,
@@ -133,8 +214,10 @@ const gameobjects = {
     {
       id: 1,
       name: "Super Clone",
-      cost: 10,
-      requireditems: [""],
+      cost: 20,
+      requireditems: [{ id: 0, quantity: 10 }],
+      max: 10,
+      multiplier: 3,
       requiredresearch: [3],
       cps: {
         baseValue: 1,
@@ -151,7 +234,7 @@ let gamestate = {
     currentscore: 0,
     totalclicks: 0,
     totalspent: 0,
-    currentAveragecps: 0
+    currentAveragecps: 0,
   },
   clickstats: {
     baseValue: 1,

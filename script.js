@@ -46,7 +46,6 @@ function loadgame() {
   loadResearch();
   loadUpgrades();
   loadShop();
-  
 }
 
 function startgame() {
@@ -56,7 +55,7 @@ function startgame() {
   loadgame();
   shakeasteroid();
   refreshScreen();
-  setInterval(mainTimer,1000);
+  setInterval(mainTimer, 1000);
 }
 
 startgame();

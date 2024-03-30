@@ -182,8 +182,8 @@ button {
   text-align: center;
   flex-basis: 20%;
 }
-.container{
-  position:relative;
+.container {
+  position: relative;
   width: 100%;
   height: 100%;
 }
@@ -197,13 +197,32 @@ button {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  row-gap: 2vh;
+  flex-shrink: 0;
   overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar:hover {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.6);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid white;
+  border-radius: 10px;
 }
 
 [shopitem] {
   font-size: 2vw;
-  margin: 1vw;
+  margin: 10px;
 }
 [shopitem][disabled] {
   background-color: blue;
@@ -215,6 +234,7 @@ button {
 
 [upgradeitem] {
   font-size: 2vw;
+  margin: 10px;
 }
 [upgradeitem][disabled]:not([complete]) {
   background-color: blue;
@@ -234,10 +254,14 @@ button {
 
 [researchitem] {
   font-size: 2vw;
+
+  margin: 10px;
 }
 
 [inventoryitem] {
   font-size: 2vw;
+
+  margin: 10px;
   background-color: green;
 }
 
