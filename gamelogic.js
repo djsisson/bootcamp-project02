@@ -24,8 +24,7 @@ function enableOrDisableUpgrade() {
     ).level;
     element.toggleAttribute(
       "disabled",
-      upgradeObj.levels[currentUpgradeLevel].cost >
-        gamestate.gamestats.currentscore
+      !canBuy(upgradeObj.levels[currentUpgradeLevel].cost)
     );
   });
 }
@@ -40,7 +39,7 @@ function enableOrDisableResearch() {
     let elementObj = gameobjects.research.find((x) => x.id == elementid);
     element.toggleAttribute(
       "disabled",
-      elementObj.cost > gamestate.gamestats.currentscore
+      !canBuy(elementObj.cost, elementObj.requireditems)
     );
   });
 }
@@ -52,7 +51,7 @@ function enableOrDisableShopItem() {
     let elementObj = gameobjects.shopitems.find((x) => x.id == elementid);
     let invenquantity = gamestate.inventory.find((x) => x.id == elementid);
     if (invenquantity.quantity == elementObj.max) {
-      element.textContent = `${elementObj.name} MAX`;
+      element.textContent = `${elementObj.name} MAX (${invenquantity.quantity})`;
       element.toggleAttribute("disabled", true);
     } else {
       let adjustedcost =
@@ -67,7 +66,7 @@ function enableOrDisableShopItem() {
   });
 }
 
-function canBuy(cost, items) {
+function canBuy(cost, items = []) {
   let buyItems = true;
   items.forEach((item) => {
     let invenItem = gamestate.inventory.find((x) => x.id == item.id);
@@ -170,9 +169,10 @@ function checkForUnlockedResearch() {
       (obj) => gamestate.researched.findIndex((i) => i == obj) != -1
     )
   );
-  //add each item that is left
+  //add each item that is left that isnt already added
   unresearchedItems.forEach((x) => {
-    addResearchElement(x, false);
+    if (document.querySelector(`[researchitem="${x.id}"]`) === null)
+      addResearchElement(x, false);
   });
 }
 
@@ -238,9 +238,9 @@ function addResearchElement(researchObj, completed) {
 
 function refreshStats() {
   const stats = gamestate.gamestats;
-  document.querySelector(
-    ".currentcounter"
-  ).textContent = `Current Total: ${Math.round(stats.currentscore)}`;
+  document.querySelector(".currentcounter").textContent = `${Math.round(
+    stats.currentscore
+  )}`;
   document.querySelector(
     ".totalclicks"
   ).textContent = `Total Clicks: ${stats.totalclicks}`;

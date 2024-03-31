@@ -13,35 +13,107 @@
   <body>
     <div class="page-container">
       <header class="theme">
-        <div class="title">Asteroid Miner</div>
-        <div class="reset"><button>Reset</button></div>
-        <div class="theme-menu"><button class="themebutton">aqua</button><button class="themebutton">red</button>
+        <div class="flex-container">
+          <div class="header-flex">
+            <div class="title-div">
+              <h1 class="theme">Asteroid Miner</h1>
+            </div>
+            <div class="player-name theme">
+              <div>name</div>
+            </div>
+            <div class="reset">
+              <button>Reset</button>
+            </div>
+            <div class="theme-container theme">
+              Theme
+              <div class="theme-menu">
+                <div class="themebutton">Aqua</div>
+                <div class="themebutton">Red</div>
+                <div class="themebutton">Orange</div>
+                <div class="themebutton">Yellow</div>
+                <div class="themebutton">Green</div>
+                <div class="themebutton">Blue</div>
+                <div class="themebutton">Indigo</div>
+                <div class="themebutton">Violet</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </header>
       <main>
         <div class="layout-container">
           <div class="upgrades theme">
-            <div class="upgrades-title">Upgrades</div><div class="container">
-              <div class="upgrade-items"></div>
-            </div></div>
-          <div class="research theme"><div class="research-title">Research</div><div class="container">
-            <div class="research-items"></div>
-          </div></div>
-          <div class="viewport theme">
-            <div class="asteroid">
-              <img src="./assets/asteroid.png" alt="" />
+            <div class="flex-container">
+              <div class="upgrades-flex">
+                <div class="upgrades-title theme">Upgrades</div>
+                <div class="container">
+                  <div class="upgrade-items"></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="counter theme"><div class="currentcounter"></div><div class="totalclicks"></div><div class="totalspent"></div><div class="currentclickvalue"></div><div class="currentclickpersecond"></div></div>
-          <div class="shop theme"><div class="shop-title">Shop</div><div class="container">
-            <div class="shop-items"></div>
-          </div></div>
-          <div class="inventory theme"><div class="inventory-title">Inventory</div><div class="container">
-            <div class="inventory-items"></div>
-          </div></div>
+          <div class="research theme">
+            <div class="flex-container">
+              <div class="research-flex">
+                <div class="research-title theme">Research</div>
+                <div class="container">
+                  <div class="research-items"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="viewport theme">
+            <div class="flex-container">
+              <div class="asteroid">
+                <img src="./assets/asteroid.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="counter theme">
+            <div class="flex-container">
+              <div class="totals-flex">
+                <div class="currentcounter theme"></div>
+              </div>
+            </div>
+          </div>
+          <div class="shop theme">
+            <div class="flex-container">
+              <div class="shop-flex">
+                <div class="shop-title theme">Shop</div>
+                <div class="container">
+                  <div class="shop-items"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inventory theme">
+            <div class="flex-container">
+              <div class="inven-flex">
+                <div class="inventory-title theme">Inventory</div>
+                <div class="container">
+                  <div class="inventory-items"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
-      <footer class="theme">signature</footer>
+      <footer class="theme">
+        <div class="flex-container">
+          <div class="footer-flex">
+            <div class="averages">
+              <div class="currentclickvalue"></div>
+              <div class="currentclickpersecond"></div>
+            </div>
+            <div class="totals">
+              <div class="totalclicks"></div>
+              <div class="totalspent"></div>
+            </div>
+            <div class="signature">Darren Sisson</div>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>

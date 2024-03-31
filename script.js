@@ -5,17 +5,6 @@ function loadtheme() {
   );
 }
 
-function changetheme() {
-  const element = document.querySelectorAll(".themebutton");
-  element.forEach((item) => {
-    item.addEventListener("click", () => {
-      localStorage.setItem("theme", item.textContent);
-      loadtheme();
-    });
-  });
-  loadtheme();
-}
-
 function resetGame() {
   if (localStorage.getItem("reset")) {
     localStorage.removeItem("gamestate");
@@ -41,8 +30,13 @@ function saveGame() {
   localStorage.setItem("gamestate", JSON.stringify(gamestate));
 }
 
+function playerName() {
+  document.querySelector(".player-name").textContent = gamestate.playername;
+}
+
 function loadgame() {
   gamestate = JSON.parse(localStorage.getItem("gamestate")) || gamestate;
+  playerName();
   loadResearch();
   loadUpgrades();
   loadShop();

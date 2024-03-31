@@ -74,3 +74,15 @@ function mainTimer() {
   });
   refreshScreen();
 }
+
+function changetheme() {
+  const element = document.querySelectorAll(".themebutton");
+  element.forEach((item) => {
+    item.addEventListener("click", () => {
+      localStorage.setItem("theme", item.textContent);
+      loadtheme();
+    });
+    item.style.color = item.textContent;
+  });
+  loadtheme();
+}
