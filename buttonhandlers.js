@@ -131,7 +131,6 @@ function hideTooltip() {
 }
 
 function generateTooltip(obj, type) {
-
   switch (type) {
     case 0:
       if (gamestate.researched.findIndex((x) => x == obj.id) == -1) {
@@ -149,8 +148,10 @@ function generateTooltip(obj, type) {
       }
       break;
     case 2:
-      let currentQuantity = gamestate.inventory.find((x)=> (x.id==obj.id)).quantity;
-      if (currentQuantity==obj.max){
+      let currentQuantity = gamestate.inventory.find(
+        (x) => x.id == obj.id
+      ).quantity;
+      if (currentQuantity == obj.max) {
         globalTooltip.innerHTML = `<p>${obj.name}<\p>Max ${currentQuantity} Permitted!`;
       } else {
         let adjustedcost = obj.cost * Math.pow(obj.multiplier, currentQuantity);
@@ -159,4 +160,28 @@ function generateTooltip(obj, type) {
       break;
     default:
   }
+}
+
+function changeName(event) {
+  event.stopPropagation();
+  const input = document.querySelector(".input-container");
+  input.style.visibility = "visible";
+  input.childNodes[1].focus();
+  input.childNodes[1].select();
+}
+
+function editName() {
+  gamestate.playername = document.querySelector(
+    ".input-container > input"
+  ).value;
+  document.querySelector(".player-name > div").textContent =
+    gamestate.playername;
+  hideName();
+}
+
+function hideName() {
+  console.log("eee");
+  const input = document.querySelector(".input-container");
+  document.body.removeEventListener("click", hideName);
+  input.style.visibility = "hidden";
 }

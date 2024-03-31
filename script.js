@@ -31,7 +31,25 @@ function saveGame() {
 }
 
 function playerName() {
-  document.querySelector(".player-name").textContent = gamestate.playername;
+  document.querySelector(".player-name > div").textContent =
+    gamestate.playername;
+  document.querySelector(".input-container > input").value =
+    gamestate.playername;
+  document
+    .querySelector(".editname")
+    .addEventListener("click", (e) => changeName(e));
+  document
+    .querySelector(".editcontainer")
+    .addEventListener("click", (e) => e.stopPropagation());
+  document
+    .querySelector(".input-container > button")
+    .addEventListener("click", editName);
+  document
+    .querySelector(".input-container")
+    .addEventListener("keydown", (e) => {
+      if (e.key === "Enter") editName();
+    });
+  document.addEventListener("click", hideName);
 }
 
 function loadgame() {

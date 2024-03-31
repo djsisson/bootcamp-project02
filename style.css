@@ -60,9 +60,6 @@ header {
   border-width: 5px;
   border-style: outset;
   border-left: none;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1vh;
   padding: 10px;
 }
 .shop {
@@ -70,9 +67,6 @@ header {
   border-width: 5px;
   border-style: outset;
   border-right: none;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1vh;
   padding: 10px;
 }
 
@@ -81,9 +75,6 @@ header {
   border-width: 5px;
   border-style: outset;
   border-right: none;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1vh;
   padding: 10px;
 }
 
@@ -183,8 +174,31 @@ button {
 }
 
 .player-name {
+  display: flex;
+}
+.input-container {
+  position: absolute;
+  right: 0px;
+  display: flex;
+  visibility: hidden;
+  color: black;
+}
+
+.input-container > input {
+  color: black;
+}
+
+.player-name > div {
   font-size: 4vw;
   font-style: italic;
+}
+
+.editcontainer {
+  position: relative;
+}
+
+.editname {
+  width: 3vw;
 }
 
 .container {
@@ -426,7 +440,6 @@ h1 {
 }
 
 .signature {
-  display: flex;
   width: 100%;
   background-size: 300px;
   background: linear-gradient(
@@ -458,10 +471,10 @@ h1 {
   }
   25% {
     transform: translateY(-20px);
-    background-position: 50px ;
+    background-position: 50px;
   }
   75% {
     transform: translateY(20px);
-    background-position: -50px ;
+    background-position: -50px;
   }
 }
