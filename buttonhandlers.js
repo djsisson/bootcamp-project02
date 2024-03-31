@@ -60,23 +60,26 @@ function shakeasteroid() {
   });
 }
 
-const globalClickText =  document.querySelector(".floatingclickcontainer");
+const globalClickText = document.querySelector(".floatingclickcontainer");
 const globalCpsText = document.querySelector(".floatingcpscontainer");
+const globalTooltip = document.querySelector(".tooltip");
 
-function addClickText(value,click=true){
+function addClickText(value, click = true) {
   const newTextElement = document.createElement("div");
   newTextElement.textContent = `+${value}`;
   newTextElement.className = "floatingclicktext";
   if (click) {
     globalClickText.appendChild(newTextElement);
-      setTimeout(() => {globalClickText.removeChild(newTextElement)}, 1000);
-  } else{
+    setTimeout(() => {
+      globalClickText.removeChild(newTextElement);
+    }, 1000);
+  } else {
     globalCpsText.appendChild(newTextElement);
-    setTimeout(() => {globalCpsText.removeChild(newTextElement)}, 1000);
+    setTimeout(() => {
+      globalCpsText.removeChild(newTextElement);
+    }, 1000);
   }
-  
 }
-
 
 function resetButton() {
   document.querySelector(".reset button").addEventListener("click", () => {
@@ -86,15 +89,15 @@ function resetButton() {
 }
 
 function mainTimer() {
-  let totaldmg = 0
+  let totaldmg = 0;
   gamestate.inventory.forEach((x) => {
     for (i = 0; i < x.quantity; i++) {
-      let dmg = calcdamage(x.cps)
+      let dmg = calcdamage(x.cps);
       gamestate.gamestats.currentscore += dmg;
-      totaldmg+=dmg
+      totaldmg += dmg;
     }
   });
-  if (totaldmg) (addClickText(totaldmg,false))
+  if (totaldmg) addClickText(totaldmg, false);
   refreshScreen();
 }
 
@@ -108,4 +111,52 @@ function changetheme() {
     item.style.color = item.textContent;
   });
   loadtheme();
+}
+
+function displayTooltip(element, right = false) {
+  let rect = element.getBoundingClientRect();
+  let tooltip = globalTooltip.getBoundingClientRect();
+  globalTooltip.style.top = `${rect.top}px`;
+  if (right) {
+    globalTooltip.style.left = `${rect.left - tooltip.width - 10}px`;
+  } else {
+    globalTooltip.style.left = `${rect.right + 10}px`;
+  }
+
+  globalTooltip.style.visibility = "visible";
+}
+
+function hideTooltip() {
+  globalTooltip.style.visibility = "hidden";
+}
+
+function generateTooltip(obj, type) {
+
+  switch (type) {
+    case 0:
+      if (gamestate.researched.findIndex((x) => x == obj.id) == -1) {
+        globalTooltip.innerHTML = `<p>${obj.name}</p><p>Cost: ${obj.cost}</p>${obj.requiredtooltip}`;
+      } else {
+        globalTooltip.innerHTML = `<p>${obj.name}</p><p>Completed!</p>`;
+      }
+      break;
+    case 1:
+      let currentLevel = gamestate.upgrades.find((x) => x.id == obj.id).level;
+      if (currentLevel == obj.levels.length) {
+        globalTooltip.innerHTML = `<p>${obj.name}<\p>Completed!`;
+      } else {
+        globalTooltip.innerHTML = `<p>${obj.name}<\p>Cost: ${obj.levels[currentLevel].cost}`;
+      }
+      break;
+    case 2:
+      let currentQuantity = gamestate.inventory.find((x)=> (x.id==obj.id)).quantity;
+      if (currentQuantity==obj.max){
+        globalTooltip.innerHTML = `<p>${obj.name}<\p>Max ${currentQuantity} Permitted!`;
+      } else {
+        let adjustedcost = obj.cost * Math.pow(obj.multiplier, currentQuantity);
+        globalTooltip.innerHTML = `<p>${obj.name}</p><p>Cost: ${adjustedcost}</p>${obj.requiredtooltip}`;
+      }
+      break;
+    default:
+  }
 }

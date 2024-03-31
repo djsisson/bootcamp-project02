@@ -6,13 +6,13 @@ function calcdamage(obj) {
   return totaldamage;
 }
 
-function buyItem(cost,items=[]) {
+function buyItem(cost, items = []) {
   gamestate.gamestats.currentscore -= cost;
   gamestate.gamestats.totalspent += cost;
   items.forEach((item) => {
     let itemtoremove = gamestate.inventory.find((x) => x.id == item.id);
     itemtoremove.quantity -= item.quantity;
-  })
+  });
   refreshScreen();
 }
 
@@ -191,14 +191,23 @@ function addUpgradeElement(upgradeObj, level, completed) {
       level + 1
     } cost: ${upgradeObj.levels[level].cost}`;
   }
-
   newUpgradeElement.type = "button";
   newUpgradeElement.toggleAttribute("complete", completed);
   newUpgradeElement.toggleAttribute("disabled", completed);
   newUpgradeElement.addEventListener("click", () => {
     increaseUpgrade(upgradeObj, newUpgradeElement);
+    generateTooltip(upgradeObj, 1);
+    displayTooltip(newUpgradeElement);
+    
   });
-  upgradeItemsElement.appendChild(newUpgradeElement);
+  newUpgradeElement.addEventListener("mouseout", () => {
+    hideTooltip();
+  });
+  newUpgradeElement.addEventListener("mouseover", () => {
+    generateTooltip(upgradeObj, 1);
+    displayTooltip(newUpgradeElement);
+  });
+  upgradeItemsElement.appendChild(newUpgradeElement, upgradeObj);
 }
 
 function addShopElement(shopObj) {
@@ -209,6 +218,16 @@ function addShopElement(shopObj) {
   newShopElement.type = "button";
   newShopElement.addEventListener("click", () => {
     buyShopItem(shopObj);
+    generateTooltip(shopObj, 2);
+    displayTooltip(newShopElement,true);
+    
+  });
+  newShopElement.addEventListener("mouseout", () => {
+    hideTooltip();
+  });
+  newShopElement.addEventListener("mouseover", () => {
+    generateTooltip(shopObj, 2);
+    displayTooltip(newShopElement,true);
   });
   shopItemsElement.appendChild(newShopElement);
 }
@@ -220,9 +239,6 @@ function addInventoryElement(invenObj) {
   let shopitem = gameobjects.shopitems.find((x) => x.id == invenObj.id);
   newinventoryElement.textContent = `${shopitem.name}  Qty: ${invenObj.quantity}`;
   newinventoryElement.type = "button";
-  newinventoryElement.addEventListener("click", () => {
-    //   buyShopItem(shopObj);
-  });
   invenItemsElement.appendChild(newinventoryElement);
 }
 
@@ -235,14 +251,25 @@ function addResearchElement(researchObj, completed) {
   } else {
     newResearchElement.textContent = `${researchObj.name} cost: ${researchObj.cost}`;
   }
-  
   newResearchElement.type = "button";
   newResearchElement.toggleAttribute("complete", completed);
   newResearchElement.toggleAttribute("disabled", completed);
   newResearchElement.addEventListener("click", () => {
+    
     addResearchToGame(researchObj, newResearchElement);
+    generateTooltip(researchObj, 0);
+    displayTooltip(newResearchElement);
   });
-  researchItemsElement.appendChild(newResearchElement);
+
+  newResearchElement.addEventListener("mouseout", () => {
+    hideTooltip();
+  });
+  newResearchElement.addEventListener("mouseover", () => {
+    generateTooltip(researchObj, 0);
+    displayTooltip(newResearchElement);
+  });
+
+  researchItemsElement.appendChild(newResearchElement, researchObj);
 }
 
 function refreshStats() {

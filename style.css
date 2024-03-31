@@ -205,7 +205,6 @@ button {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  flex-shrink: 0;
   overflow-y: auto;
 }
 
@@ -333,6 +332,7 @@ button {
 .theme-container:hover .theme-menu {
   display: flex;
   flex-direction: column;
+  z-index: 9;
 }
 
 .theme-menu {
@@ -410,4 +410,17 @@ h1 {
     transform: translateY(-200%) rotateZ(15deg);
     opacity: 0;
   }
+}
+
+.tooltip{
+  position: fixed;
+  display: inline-block;
+  visibility: hidden;
+  z-index: 11;
+  background-color: black;
+  color: white;
+}
+
+.tooltiptext{
+  display: none;
 }

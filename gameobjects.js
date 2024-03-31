@@ -172,6 +172,7 @@ const gameobjects = {
       name: "Cloning",
       cost: 1,
       requireditems: [],
+      requiredtooltip: "",
       requiredresearch: [],
     },
     {
@@ -179,6 +180,7 @@ const gameobjects = {
       name: "Critcal Strike",
       cost: 10,
       requireditems: [{ id: 0, quantity: 2 }],
+      requiredtooltip: "<p>2 Clones Required</p>",
       requiredresearch: [0],
     },
     {
@@ -187,6 +189,7 @@ const gameobjects = {
       cost: 100,
       requireditems: [{ id: 0, quantity: 5 }],
       requiredresearch: [0],
+      requiredtooltip: "<p>5 Clones Required</p>",
     },
     {
       id: 3,
@@ -194,6 +197,7 @@ const gameobjects = {
       cost: 1000,
       requireditems: [{ id: 0, quantity: 10 }],
       requiredresearch: [1, 2],
+      requiredtooltip: "<p>10 Clones Required</p>",
     },
   ],
   shopitems: [
@@ -202,6 +206,7 @@ const gameobjects = {
       name: "Clone",
       cost: 5,
       requireditems: [],
+      requiredtooltip: "",
       max: 10,
       multiplier: 2,
       requiredresearch: [0],
@@ -216,6 +221,7 @@ const gameobjects = {
       name: "Super Clone",
       cost: 20,
       requireditems: [{ id: 0, quantity: 10 }],
+      requiredtooltip: "<p>10 Clones Required</p>",
       max: 10,
       multiplier: 3,
       requiredresearch: [3],
