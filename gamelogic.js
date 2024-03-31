@@ -287,11 +287,11 @@ function refreshStats() {
   document.querySelector(
     ".currentclickvalue"
   ).textContent = `Average Click Value: ${Math.round(
-    averageDamage(clickstats)
-  )}`;
+    averageDamage(clickstats)*100
+  )/100}`;
   document.querySelector(
     ".currentclickpersecond"
-  ).textContent = `Average CPS: ${Math.round(stats.currentAveragecps)}`;
+  ).textContent = `Average CPS: ${Math.round(stats.currentAveragecps*100)/100}`;
 }
 
 function averageDamage(obj) {
