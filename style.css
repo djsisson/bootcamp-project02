@@ -233,10 +233,10 @@ button {
   margin: 10px;
 }
 [shopitem][disabled] {
-  background-color: blue;
+  background-color: yellow;
 }
 [shopitem]:not([disabled]) {
-  background-color: yellow;
+  background-color: green;
   cursor: pointer;
 }
 
@@ -245,15 +245,15 @@ button {
   margin: 10px;
 }
 [upgradeitem][disabled]:not([complete]) {
-  background-color: blue;
+  background-color: yellow;
 }
 [upgradeitem]:not([disabled]):not([complete]) {
-  background-color: yellow;
+  background-color: green;
   cursor: pointer;
 }
 [upgradeitem][complete] {
   cursor: not-allowed;
-  background-color: green;
+  background-color: blue;
 }
 
 [disabled] {
@@ -270,19 +270,19 @@ button {
   font-size: 2vw;
 
   margin: 10px;
-  background-color: green;
+  background-color: blue;
 }
 
 [researchitem][complete] {
   cursor: not-allowed;
-  background-color: green;
+  background-color: blue;
 }
 
 [researchitem][disabled]:not([complete]) {
-  background-color: blue;
+  background-color: yellow;
 }
 [researchitem]:not([disabled]):not([complete]) {
-  background-color: yellow;
+  background-color: green;
   cursor: pointer;
 }
 .flex-container {

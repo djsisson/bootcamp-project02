@@ -6,9 +6,13 @@ function calcdamage(obj) {
   return totaldamage;
 }
 
-function buyItem(cost) {
+function buyItem(cost,items=[]) {
   gamestate.gamestats.currentscore -= cost;
   gamestate.gamestats.totalspent += cost;
+  items.forEach((item) => {
+    let itemtoremove = gamestate.inventory.find((x) => x.id == item.id);
+    itemtoremove.quantity -= item.quantity;
+  })
   refreshScreen();
 }
 
@@ -226,7 +230,12 @@ function addResearchElement(researchObj, completed) {
   const researchItemsElement = document.querySelector(".research-items");
   const newResearchElement = document.createElement("button");
   newResearchElement.setAttribute("researchitem", researchObj.id);
-  newResearchElement.textContent = `${researchObj.name} cost: ${researchObj.cost}`;
+  if (completed) {
+    newResearchElement.textContent = `${researchObj.name} Completed!`;
+  } else {
+    newResearchElement.textContent = `${researchObj.name} cost: ${researchObj.cost}`;
+  }
+  
   newResearchElement.type = "button";
   newResearchElement.toggleAttribute("complete", completed);
   newResearchElement.toggleAttribute("disabled", completed);

@@ -5,7 +5,7 @@ function addResearchToGame(researchObj, researchElement) {
   checkForUnlockedResearch();
   checkForUnlockedUpgrades();
   checkForUnlockedShopItem();
-  buyItem(researchObj.cost);
+  buyItem(researchObj.cost, researchObj.requireditems);
 }
 
 function increaseUpgrade(upgradeObj, upgradeElement) {
@@ -42,11 +42,10 @@ function increaseUpgrade(upgradeObj, upgradeElement) {
 function buyShopItem(shopObj) {
   let InvenItem = gamestate.inventory.find((x) => x.id == shopObj.id);
   InvenItem.quantity++;
-  shopObj.requireditems.forEach((item) => {
-    let itemtoremove = gamestate.inventory.find((x) => x.id == item.id);
-    itemtoremove.quantity -= item.quantity;
-  });
-  buyItem(shopObj.cost * Math.pow(shopObj.multiplier, InvenItem.quantity - 1));
+  buyItem(
+    shopObj.cost * Math.pow(shopObj.multiplier, InvenItem.quantity - 1),
+    shopObj.requireditems
+  );
 }
 
 function shakeasteroid() {
