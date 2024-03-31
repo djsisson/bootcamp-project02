@@ -53,10 +53,30 @@ function shakeasteroid() {
   image.addEventListener("click", () => {
     image.classList.toggle("shake");
     gamestate.gamestats.totalclicks++;
-    gamestate.gamestats.currentscore += calcdamage(gamestate.clickstats);
+    let dmg = calcdamage(gamestate.clickstats);
+    gamestate.gamestats.currentscore += dmg;
+    addClickText(dmg);
     refreshScreen();
   });
 }
+
+const globalClickText =  document.querySelector(".floatingclickcontainer");
+const globalCpsText = document.querySelector(".floatingcpscontainer");
+
+function addClickText(value,click=true){
+  const newTextElement = document.createElement("div");
+  newTextElement.textContent = `+${value}`;
+  newTextElement.className = "floatingclicktext";
+  if (click) {
+    globalClickText.appendChild(newTextElement);
+      setTimeout(() => {globalClickText.removeChild(newTextElement)}, 1000);
+  } else{
+    globalCpsText.appendChild(newTextElement);
+    setTimeout(() => {globalCpsText.removeChild(newTextElement)}, 1000);
+  }
+  
+}
+
 
 function resetButton() {
   document.querySelector(".reset button").addEventListener("click", () => {
@@ -66,11 +86,15 @@ function resetButton() {
 }
 
 function mainTimer() {
+  let totaldmg = 0
   gamestate.inventory.forEach((x) => {
     for (i = 0; i < x.quantity; i++) {
-      gamestate.gamestats.currentscore += calcdamage(x.cps);
+      let dmg = calcdamage(x.cps)
+      gamestate.gamestats.currentscore += dmg;
+      totaldmg+=dmg
     }
   });
+  if (totaldmg) (addClickText(totaldmg,false))
   refreshScreen();
 }
 
