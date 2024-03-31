@@ -231,7 +231,7 @@ const gameobjects = {
 let gamestate = {
   playername: "Traveller",
   gamestats: {
-    currentscore: 1000000,
+    currentscore: 0,
     totalclicks: 0,
     totalspent: 0,
     currentAveragecps: 0,
