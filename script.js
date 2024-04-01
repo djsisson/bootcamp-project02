@@ -14,7 +14,6 @@ function resetGame() {
 }
 
 function refreshScreen() {
-  refreshStats();
   enableOrDisable();
   refreshInventory();
   saveGame();

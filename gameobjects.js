@@ -149,25 +149,25 @@ const gameobjects = {
       effectitemid: 1,
       levels: [
         {
-          cost: 10,
+          cost: 250,
           upgrade: {
-            baseValue: 1,
+            baseValue: 2,
+            critChance: 0.1,
+            critDamage: 0,
+          },
+        },
+        {
+          cost: 1000,
+          upgrade: {
+            baseValue: 2,
             critChance: 0,
             critDamage: 0,
           },
         },
         {
-          cost: 50,
+          cost: 2500,
           upgrade: {
-            baseValue: 1,
-            critChance: 0,
-            critDamage: 0,
-          },
-        },
-        {
-          cost: 100,
-          upgrade: {
-            baseValue: 1,
+            baseValue: 2,
             critChance: 0.1,
             critDamage: 1,
           },

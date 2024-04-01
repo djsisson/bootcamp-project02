@@ -95,7 +95,7 @@ function mainTimer() {
     for (i = 0; i < x.quantity; i++) {
       let dmg = calcdamage(x.cps);
       gamestate.gamestats.currentscore += dmg.totaldamage;
-      if (dmg.totaldamage != 0) addClickText(dmg.totaldamage, false);
+      if (dmg.totaldamage != 0) addClickText(dmg.totaldamage, false, dmg.crit);
     }
   });
   refreshScreen();
