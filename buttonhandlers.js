@@ -71,7 +71,7 @@ function addClickText(value, click = true,crit=false) {
     globalClickText.appendChild(newTextElement);
     setTimeout(() => {
       globalClickText.removeChild(newTextElement);
-    }, 2000);
+    }, 3000);
   } else {
     globalCpsText.appendChild(newTextElement);
     newTextElement.style.visibility = "hidden";
@@ -79,7 +79,7 @@ function addClickText(value, click = true,crit=false) {
     newTextElement.style.animationDelay = randomDelay + "s";
     setTimeout(() => {
       globalCpsText.removeChild(newTextElement);
-    }, 1000 + randomDelay * 1000);
+    }, 1000 + randomDelay * 3000);
   }
 }
 

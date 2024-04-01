@@ -49,7 +49,7 @@ const gameobjects = {
         {
           cost: 10,
           upgrade: {
-            baseValue: 1,
+            baseValue: 0.5,
             critChance: 0,
             critDamage: 0,
           },
@@ -117,7 +117,7 @@ const gameobjects = {
         {
           cost: 100,
           upgrade: {
-            baseValue: 2,
+            baseValue: 1,
             critChance: 0,
             critDamage: 0,
           },
@@ -151,7 +151,7 @@ const gameobjects = {
         {
           cost: 250,
           upgrade: {
-            baseValue: 2,
+            baseValue: 1,
             critChance: 0.1,
             critDamage: 0,
           },
@@ -159,7 +159,7 @@ const gameobjects = {
         {
           cost: 1000,
           upgrade: {
-            baseValue: 2,
+            baseValue: 1,
             critChance: 0,
             critDamage: 0,
           },
@@ -167,7 +167,7 @@ const gameobjects = {
         {
           cost: 2500,
           upgrade: {
-            baseValue: 2,
+            baseValue: 1,
             critChance: 0.1,
             critDamage: 1,
           },
