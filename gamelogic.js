@@ -199,6 +199,7 @@ function addUpgradeElement(upgradeObj, level, completed) {
     displayTooltip(newUpgradeElement);
   });
   upgradeItemsElement.appendChild(newUpgradeElement, upgradeObj);
+  newUpgradeElement.scrollIntoView();
 }
 
 function addShopElement(shopObj) {
@@ -220,6 +221,7 @@ function addShopElement(shopObj) {
     displayTooltip(newShopElement,true);
   });
   shopItemsElement.appendChild(newShopElement);
+  newShopElement.scrollIntoView();
 }
 
 function addInventoryElement(invenObj) {
@@ -230,6 +232,7 @@ function addInventoryElement(invenObj) {
   newinventoryElement.textContent = `${shopitem.name}  Qty: ${invenObj.quantity}`;
   newinventoryElement.type = "button";
   invenItemsElement.appendChild(newinventoryElement);
+  newinventoryElement.scrollIntoView();
 }
 
 function addResearchElement(researchObj, completed) {
@@ -260,6 +263,7 @@ function addResearchElement(researchObj, completed) {
   });
 
   researchItemsElement.appendChild(newResearchElement, researchObj);
+  newResearchElement.scrollIntoView();
 }
 
 function refreshStats() {
