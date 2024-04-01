@@ -54,30 +54,32 @@ function shakeasteroid() {
     image.classList.toggle("shake");
     gamestate.gamestats.totalclicks++;
     let dmg = calcdamage(gamestate.clickstats);
-    gamestate.gamestats.currentscore += dmg;
-    addClickText(dmg);
+    gamestate.gamestats.currentscore += dmg.totaldamage;
+    addClickText(dmg.totaldamage,true,dmg.crit);
     refreshScreen();
   });
 }
 
-const globalClickText = document.querySelector(".floatingclickcontainer");
-const globalCpsText = document.querySelector(".floatingcpscontainer");
-const globalTooltip = document.querySelector(".tooltip");
-
-function addClickText(value, click = true) {
+function addClickText(value, click = true,crit=false) {
   const newTextElement = document.createElement("div");
   newTextElement.textContent = `+${value}`;
   newTextElement.className = "floatingclicktext";
+  newTextElement.style.left = Math.random() * 40 - 20 + "px";
+  newTextElement.style.top = Math.random() * 40 - 20 + "px";
+  newTextElement.toggleAttribute("crit",crit);
   if (click) {
     globalClickText.appendChild(newTextElement);
     setTimeout(() => {
       globalClickText.removeChild(newTextElement);
-    }, 1000);
+    }, 2000);
   } else {
     globalCpsText.appendChild(newTextElement);
+    newTextElement.style.visibility = "hidden";
+    let randomDelay = Math.random();
+    newTextElement.style.animationDelay = randomDelay + "s";
     setTimeout(() => {
       globalCpsText.removeChild(newTextElement);
-    }, 1000);
+    }, 1000 + randomDelay * 1000);
   }
 }
 
@@ -89,15 +91,13 @@ function resetButton() {
 }
 
 function mainTimer() {
-  let totaldmg = 0;
   gamestate.inventory.forEach((x) => {
     for (i = 0; i < x.quantity; i++) {
       let dmg = calcdamage(x.cps);
-      gamestate.gamestats.currentscore += dmg;
-      totaldmg += dmg;
+      gamestate.gamestats.currentscore += dmg.totaldamage;
+      if (dmg.totaldamage != 0) addClickText(dmg.totaldamage, false);
     }
   });
-  if (totaldmg) addClickText(totaldmg, false);
   refreshScreen();
 }
 
@@ -134,7 +134,7 @@ function generateTooltip(obj, type) {
   switch (type) {
     case 0:
       if (gamestate.researched.findIndex((x) => x == obj.id) == -1) {
-        globalTooltip.innerHTML = `<p>${obj.name}</p><p>Cost: ${obj.cost}</p>${obj.requiredtooltip}`;
+        globalTooltip.innerHTML = `<p>${obj.name}</p>${obj.description}<p>Cost: ${obj.cost}</p>${obj.requiredtooltip}`;
       } else {
         globalTooltip.innerHTML = `<p>${obj.name}</p><p>Completed!</p>`;
       }
@@ -142,9 +142,9 @@ function generateTooltip(obj, type) {
     case 1:
       let currentLevel = gamestate.upgrades.find((x) => x.id == obj.id).level;
       if (currentLevel == obj.levels.length) {
-        globalTooltip.innerHTML = `<p>${obj.name}<\p>Completed!`;
+        globalTooltip.innerHTML = `<p>${obj.name}</p>Completed!`;
       } else {
-        globalTooltip.innerHTML = `<p>${obj.name}<\p>Cost: ${obj.levels[currentLevel].cost}`;
+        globalTooltip.innerHTML = `<p>${obj.name}</p>${obj.description}Cost: ${obj.levels[currentLevel].cost}`;
       }
       break;
     case 2:
@@ -180,7 +180,6 @@ function editName() {
 }
 
 function hideName() {
-  console.log("eee");
   const input = document.querySelector(".input-container");
   document.body.removeEventListener("click", hideName);
   input.style.visibility = "hidden";

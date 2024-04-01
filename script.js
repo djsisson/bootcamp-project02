@@ -26,6 +26,21 @@ function enableOrDisable() {
   enableOrDisableShopItem();
 }
 
+function loadUpgrades() {
+  loadUpgradesFromGameSave();
+  checkForUnlockedUpgrades();
+}
+
+function loadResearch() {
+  loadResearchFromGameSave();
+  checkForUnlockedResearch();
+}
+
+function loadShop() {
+  loadShopItemsFromGameSave();
+  checkForUnlockedShopItem();
+}
+
 function saveGame() {
   localStorage.setItem("gamestate", JSON.stringify(gamestate));
 }
@@ -35,6 +50,9 @@ function playerName() {
     gamestate.playername;
   document.querySelector(".input-container > input").value =
     gamestate.playername;
+}
+
+function addListeners() {
   document
     .querySelector(".editname")
     .addEventListener("click", (e) => changeName(e));
@@ -54,7 +72,13 @@ function playerName() {
 
 function loadgame() {
   gamestate = JSON.parse(localStorage.getItem("gamestate")) || gamestate;
-  playerName();
+  addListeners();
+  if (gamestate.playername == "") {
+    gamestate.playername = "Traveller";
+    playerName();
+    changeName(new Event("click"));
+  } else {playerName()}
+
   loadResearch();
   loadUpgrades();
   loadShop();

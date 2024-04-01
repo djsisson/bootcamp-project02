@@ -1,8 +1,13 @@
+const globalClickText = document.querySelector(".floatingclickcontainer");
+const globalCpsText = document.querySelector(".floatingcpscontainer");
+const globalTooltip = document.querySelector(".tooltip");
+
 const gameobjects = {
   upgrades: [
     {
       id: 0,
       name: "Weapon",
+      description: "<p>Upgrades Click Damage</p>",
       requiredresearch: [],
       type: 0,
       effectitemid: 0,
@@ -36,6 +41,7 @@ const gameobjects = {
     {
       id: 1,
       name: "Clones",
+      description: "<p>Upgrades Clone Damage</p>",
       requiredresearch: [0],
       type: 1,
       effectitemid: 0,
@@ -69,6 +75,7 @@ const gameobjects = {
     {
       id: 2,
       name: "Crit Chance",
+      description: "<p>Click Damage Can Now Critically Hit</p>",
       requiredresearch: [1],
       type: 0,
       effectitemid: 0,
@@ -102,6 +109,7 @@ const gameobjects = {
     {
       id: 3,
       name: "Refining",
+      description: "<p>Further Increase Click Damage</p>",
       requiredresearch: [2],
       type: 0,
       effectitemid: 0,
@@ -135,6 +143,7 @@ const gameobjects = {
     {
       id: 4,
       name: "Super Clones",
+      description: "<p>Upgrades Super Clone Damage</p>",
       requiredresearch: [3],
       type: 1,
       effectitemid: 1,
@@ -170,6 +179,7 @@ const gameobjects = {
     {
       id: 0,
       name: "Cloning",
+      description: "<p>Unlocks Clones</p>",
       cost: 1,
       requireditems: [],
       requiredtooltip: "",
@@ -178,6 +188,7 @@ const gameobjects = {
     {
       id: 1,
       name: "Critcal Strike",
+      description: "<p>Unlocks Upgrading Click Damage</p>",
       cost: 10,
       requireditems: [{ id: 0, quantity: 2 }],
       requiredtooltip: "<p>2 Clones Required</p>",
@@ -186,6 +197,7 @@ const gameobjects = {
     {
       id: 2,
       name: "Refining",
+      description: "<p>Further Unlocks Upgrading Click Damage</p>",
       cost: 100,
       requireditems: [{ id: 0, quantity: 5 }],
       requiredresearch: [0],
@@ -194,6 +206,7 @@ const gameobjects = {
     {
       id: 3,
       name: "Super Clones",
+      description: "<p>Unlocks Super Clones</p>",
       cost: 1000,
       requireditems: [{ id: 0, quantity: 10 }],
       requiredresearch: [1, 2],
@@ -235,7 +248,7 @@ const gameobjects = {
 };
 
 let gamestate = {
-  playername: "Traveller",
+  playername: "",
   gamestats: {
     currentscore: 0,
     totalclicks: 0,
@@ -251,3 +264,4 @@ let gamestate = {
   upgrades: [{ id: 0, level: 0 }],
   inventory: [],
 };
+

@@ -1,9 +1,15 @@
 function calcdamage(obj) {
   let totaldamage = obj.baseValue;
+  let crit = false;
   if (Math.random() < obj.critChance) {
     totaldamage = totaldamage * (obj.critDamage + 1);
+    crit = true;
   }
-  return totaldamage;
+  return ({totaldamage, crit});
+}
+
+function averageDamage(obj) {
+  return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
 }
 
 function buyItem(cost, items = []) {
@@ -14,6 +20,20 @@ function buyItem(cost, items = []) {
     itemtoremove.quantity -= item.quantity;
   });
   refreshScreen();
+}
+
+function canBuy(cost, items = []) {
+  let buyItems = true;
+  items.forEach((item) => {
+    let invenItem = gamestate.inventory.find((x) => x.id == item.id);
+    if (invenItem.quantity < item.quantity) {
+      buyItems = false;
+    }
+  });
+  if (cost > gamestate.gamestats.currentscore) {
+    buyItems = false;
+  }
+  return buyItems;
 }
 
 function enableOrDisableUpgrade() {
@@ -68,35 +88,6 @@ function enableOrDisableShopItem() {
       );
     }
   });
-}
-
-function canBuy(cost, items = []) {
-  let buyItems = true;
-  items.forEach((item) => {
-    let invenItem = gamestate.inventory.find((x) => x.id == item.id);
-    if (invenItem.quantity < item.quantity) {
-      buyItems = false;
-    }
-  });
-  if (cost > gamestate.gamestats.currentscore) {
-    buyItems = false;
-  }
-  return buyItems;
-}
-
-function loadUpgrades() {
-  loadUpgradesFromGameSave();
-  checkForUnlockedUpgrades();
-}
-
-function loadResearch() {
-  loadResearchFromGameSave();
-  checkForUnlockedResearch();
-}
-
-function loadShop() {
-  loadShopItemsFromGameSave();
-  checkForUnlockedShopItem();
 }
 
 function loadUpgradesFromGameSave() {
@@ -220,7 +211,6 @@ function addShopElement(shopObj) {
     buyShopItem(shopObj);
     generateTooltip(shopObj, 2);
     displayTooltip(newShopElement,true);
-    
   });
   newShopElement.addEventListener("mouseout", () => {
     hideTooltip();
@@ -292,10 +282,6 @@ function refreshStats() {
   document.querySelector(
     ".currentclickpersecond"
   ).textContent = `Average CPS: ${Math.round(stats.currentAveragecps*100)/100}`;
-}
-
-function averageDamage(obj) {
-  return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
 }
 
 function refreshInventory() {
