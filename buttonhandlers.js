@@ -166,8 +166,8 @@ function changeName(event) {
   event.stopPropagation();
   const input = document.querySelector(".input-container");
   input.style.visibility = "visible";
-  input.childNodes[1].focus();
-  input.childNodes[1].select();
+  input.childNodes[2].focus();
+  input.childNodes[2].select();
 }
 
 function editName() {

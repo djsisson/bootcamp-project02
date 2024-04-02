@@ -15,14 +15,13 @@
   width: 100vw;
   height: 100vh;
   display: grid;
+  background-color: black;
   background-image: url(./assets/starfield.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   grid-template-rows: 1fr 8fr 1fr;
   grid-template-columns: 1fr;
-  min-height: 0;
-  min-width: 0;
 }
 
 .theme {
@@ -115,12 +114,17 @@ footer {
   border-top: 5px outset;
 }
 
+button{
+color:black;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
 .totals {
   display: flex;
   flex-direction: column;
-}
-button {
-  color: black;
 }
 
 @keyframes shake {
@@ -178,14 +182,20 @@ button {
 }
 .input-container {
   position: absolute;
-  right: 0px;
+  top: 10vh;
+  left: -28vw;
   display: flex;
   visibility: hidden;
   color: black;
+  background-color: transparent;
+}
+label{
+  padding-right: 2vw;
 }
 
 .input-container > input {
   color: black;
+  background-color: 255,255,255,1;
 }
 
 .player-name > div {
@@ -204,7 +214,9 @@ button {
 }
 .editname:hover{
   border-bottom: 1px solid var(--customtheme);
+  cursor: pointer;
 }
+
 
 .container {
   position: relative;
@@ -506,11 +518,11 @@ h1 {
     transform: translateY(0);
   }
   25% {
-    transform: translateY(-20px);
+    transform: translateY(-2vh);
     background-position: 50px;
   }
   75% {
-    transform: translateY(20px);
+    transform: translateY(2vh);
     background-position: -50px;
   }
 }
